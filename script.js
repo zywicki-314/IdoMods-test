@@ -69,6 +69,9 @@ const activeMenuItem = (nodeNavList, screenMoborDesk) => {
         navItem.classList.add(activeClass);
         if (screenMoborDesk) {
           mobMenuPopUp.classList.remove("mob-nav-active");
+          midleMenuLine.classList.add("line-burger-active");
+          mobMenuToggle.classList.add("mob-menu-toggle-disabled");
+          mobMenuToggle.classList.remove("mob-menu-toggle-active");
         }
         blurContainerClose();
       });
@@ -78,7 +81,7 @@ const activeMenuItem = (nodeNavList, screenMoborDesk) => {
 //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////
-const screenMoborDesk = document.body.clientWidth < 769;
+const screenMoborDesk = document.body.clientWidth < 1024;
 const onResizeScreen = () => {
   if (screenMoborDesk) {
     activeMenuItem(mobMenuItem, screenMoborDesk);
