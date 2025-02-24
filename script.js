@@ -190,8 +190,8 @@ selectdata.addEventListener("change", function () {
   productData.pageSize = selectdata.value;
   productData.pageNumber = 1;
   productList.innerHTML = "";
-  productList.loadedData = [];
-  productList.lastPageData = [];
+  productData.loadedData = [];
+  productData.lastPageData = [];
   productList.pageHeight = document.body.offsetHeight;
   fetchData(productData);
 });
