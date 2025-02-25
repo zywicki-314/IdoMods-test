@@ -24,6 +24,13 @@ const blurContainerOpen = () => {
   blurContainer.classList.remove("hidden-items");
 };
 
+const togleMobMenuClose = () => {
+  mobMenuPopUp.classList.remove("mob-nav-active");
+  midleMenuLine.classList.add("line-burger-active");
+  mobMenuToggle.classList.add("mob-menu-toggle-disabled");
+  mobMenuToggle.classList.remove("mob-menu-toggle-active");
+};
+
 const popUpContainerClose = () => {
   popUpContainer.classList.remove("pop-up");
   popUpContainer.classList.add("hidden-items");
@@ -43,11 +50,13 @@ popUpToggle.addEventListener("click", function () {
 blurContainer.addEventListener("click", function () {
   blurContainerClose();
   popUpContainerClose();
+  togleMobMenuClose();
 
   if (mobMenuPopUp.classList.contains("mob-nav-active")) {
-    mobMenuPopUp.classList.remove("mob-nav-active");
+    togleMobMenuClose();
   }
 });
+
 //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////
 //////////////////////////////////////////////////////
@@ -68,10 +77,7 @@ const activeMenuItem = (nodeNavList, screenMoborDesk) => {
         });
         navItem.classList.add(activeClass);
         if (screenMoborDesk) {
-          mobMenuPopUp.classList.remove("mob-nav-active");
-          midleMenuLine.classList.add("line-burger-active");
-          mobMenuToggle.classList.add("mob-menu-toggle-disabled");
-          mobMenuToggle.classList.remove("mob-menu-toggle-active");
+          togleMobMenuClose();
         }
         blurContainerClose();
       });
@@ -108,10 +114,7 @@ mobMenuToggle.addEventListener("click", function () {
   const isTheMenuOpen = mobMenuPopUp.classList.contains("mob-nav-active");
 
   if (isTheMenuOpen) {
-    mobMenuPopUp.classList.remove("mob-nav-active");
-    midleMenuLine.classList.add("line-burger-active");
-    mobMenuToggle.classList.add("mob-menu-toggle-disabled");
-    mobMenuToggle.classList.remove("mob-menu-toggle-active");
+    togleMobMenuClose();
     blurContainerClose();
   } else {
     mobMenuPopUp.classList.add("mob-nav-active");
