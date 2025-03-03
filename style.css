@@ -184,7 +184,6 @@ nav .nav-container {
     box-sizing: border-box;
     font-size: 12px;
     line-height: 12px;
-    /* background-color: aqua; */
   }
 
   .nav-container .mob-menu-toggle {
@@ -203,7 +202,7 @@ nav .nav-container {
     font-size: 0px;
     line-height: 0px;
 
-    transition: all ease 1s;
+    transition: all ease 0.3s;
 
     z-index: 10;
   }
@@ -294,7 +293,7 @@ nav .nav-container {
     right: 0;
 
     transform: translateY(-300px);
-    transition: all ease 0.5s;
+    transition: all ease 0.4s;
     z-index: 900;
   }
   .mob-item-wrapper {
@@ -1827,12 +1826,17 @@ h4 {
   .products .select-wrapper {
     position: relative;
     flex-direction: column;
-    text-align: center;
+    justify-content: center;
     align-items: center;
     width: 260px;
     height: 92px;
+
+    padding: 0;
   }
   .select-wrapper label {
+    display: flex;
+    justify-content: center;
+    text-align: center;
     padding: 0;
     width: 100%;
     height: 46px;
@@ -1864,6 +1868,9 @@ h4 {
   .product {
     width: 105px;
     height: 105px;
+  }
+  .product h2 {
+    font-size: 31px;
   }
 }
 
