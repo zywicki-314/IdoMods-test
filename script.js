@@ -284,18 +284,18 @@ window.addEventListener("scroll", function () {
   const leftSpot = document.querySelector(".parallax-leftSpot");
   //
   const dogSpeed = 0.5;
-  const rightSpotSpeed = 1.5;
-  const leftSpotSpeed = -1.3;
+  const rightSpotSpeed = 1;
+  const leftSpotSpeed = 1.7;
 
   dog.style.cssText = `transform: translateY(300px)`;
   rightSpot.style.cssText = `transform: translateY(490px)`;
 
   if (pC.top <= 550 && pC.top > 0) {
     dog.style.cssText = `transform: translateY(${pC.top * dogSpeed}px)`;
-    rightSpot.style.cssText = `transform: translateX(${
+    rightSpot.style.cssText = `transform: translateY(${
       pC.top * rightSpotSpeed
     }px)`;
-    leftSpot.style.cssText = `transform: translateX(${
+    leftSpot.style.cssText = `transform: translateY(${
       pC.top * leftSpotSpeed
     }px)`;
     //
