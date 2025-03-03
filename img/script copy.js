@@ -1,10 +1,8 @@
 const mobMenuToggle = document.querySelector(".mob-menu-toggle");
-const descNavMenu = document.querySelector(".desc-items");
 const mobMenuPopUp = document.querySelector(".mob-items");
-//
-const descMenuItem = document.querySelectorAll(".nav-item");
 const mobMenuItem = document.querySelectorAll(".mob-item");
-const allMenuItems = [...descMenuItem, ...mobMenuItem];
+const descMenuItem = document.querySelectorAll(".nav-item");
+const descNavMenu = document.querySelector(".desc-items");
 //
 const popUpToggle = document.querySelector(".close-pop-up");
 const popUpContainer = document.getElementById("popUp");
@@ -14,9 +12,6 @@ const navBar = document.getElementById("nav");
 //
 const nameId = document.querySelector(".id-data");
 const nameText = document.querySelector(".text-data");
-//
-const section1 = document.getElementById("section--1");
-const section2 = document.getElementById("section--2");
 //
 const productsContener = document.getElementById("section--3");
 const sections = document.querySelectorAll("section[data-id]");
@@ -65,7 +60,80 @@ blurContainer.addEventListener("click", function () {
 });
 //
 
+const deskNavElements = document.querySelectorAll("li[data-desk-href]");
+const mobileNavElements = document.querySelectorAll("li[data-mob-href]");
+//
+let sectioinStartPosition = [];
 let navBarHeight = navBar.getBoundingClientRect().height;
+//
+const resizeScreenHandler = () => {
+  sectioinStartPosition = [];
+  navBarHeight = navBar.getBoundingClientRect().height;
+  sections.forEach((section) => {
+    const sectionTop = section.getBoundingClientRect().top;
+    const sectionHeight = section.getBoundingClientRect().height;
+    sectioinStartPosition.push({
+      top: Math.round(sectionTop),
+      height: Math.round(sectionHeight),
+    });
+  });
+};
+//
+resizeScreenHandler();
+console.log(sectioinStartPosition);
+//
+window.onresize = function () {
+  resizeScreenHandler();
+};
+
+const activeMenuItem = (nodeNavList, screenMoborDesk) => {
+  let activeClass;
+  if (screenMoborDesk) {
+    activeClass = "mob-item-active";
+  } else {
+    activeClass = "desc-active-item";
+  }
+  if (nodeNavList.length !== 0) {
+    nodeNavList.forEach((navItem, index) => {
+      navItem.addEventListener("click", function () {
+        nodeNavList.forEach((navItem) => {
+          navItem.classList.contains(activeClass)
+            ? navItem.classList.remove(activeClass)
+            : navItem;
+        });
+        navItem.classList.add(activeClass);
+        if (screenMoborDesk) {
+          togleMobMenuClose();
+        }
+        blurContainerClose();
+        const scrollToPosition =
+          sectioinStartPosition[index].top - navBarHeight;
+        window.scroll(0, `${scrollToPosition}`);
+      });
+    });
+  }
+};
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+const screenMoborDesk = document.body.clientWidth < 1024;
+const onResizeScreen = () => {
+  if (screenMoborDesk) {
+    activeMenuItem(mobMenuItem, screenMoborDesk);
+  } else {
+    activeMenuItem(descMenuItem, screenMoborDesk);
+  }
+};
+onResizeScreen();
+
+screenMoborDesk
+  ? descNavMenu.classList.add("hidden-items")
+  : mobMenuPopUp.classList.add("hidden-items");
+
+window.onresize = function () {
+  onResizeScreen();
+};
+// 333
 //
 const midleMenuLine = document.querySelector(".line-burger");
 mobMenuToggle.classList.add("mob-menu-toggle-disabled");
@@ -153,120 +221,38 @@ selectdata.addEventListener("change", function () {
 });
 
 function displayProducts(products) {
-  if (products) {
-    products.forEach((product) => {
-      const productDiv = document.createElement("div");
-      productDiv.classList.add("product");
+  products.forEach((product) => {
+    const productDiv = document.createElement("div");
+    productDiv.classList.add("product");
 
-      const productName = document.createElement("h2");
-      productName.textContent = `ID:${product.id}`;
+    const productName = document.createElement("h2");
+    productName.textContent = product.text;
 
-      productDiv.appendChild(productName);
-      productList.appendChild(productDiv);
+    productDiv.appendChild(productName);
+    productList.appendChild(productDiv);
 
-      productDiv.addEventListener("click", function () {
-        blurContainerOpen();
-        popUpContainerOpen();
+    observeDynamicElements();
 
-        const id = product.id;
-        const text = product.text;
+    productDiv.addEventListener("click", function () {
+      blurContainerOpen();
+      popUpContainerOpen();
 
-        if (nameId && nameText) {
-          nameId.textContent = id;
-          nameText.textContent = text;
-        }
-      });
+      const id = product.id;
+      const text = product.text;
+
+      if (nameId && nameText) {
+        nameId.textContent = id;
+        nameText.textContent = text;
+      }
     });
-    productData.pageHeight = document.body.offsetHeight;
-  }
+  });
+  productData.pageHeight = document.body.offsetHeight;
 }
 //
-
-//
-allMenuItems.forEach((menuItem) => {
-  menuItem.addEventListener("click", () => {
-    const sectionId = menuItem.dataset.href;
-    const section = document.getElementById(`${sectionId}`);
-    if (section) {
-      navBarHeight = navBar.getBoundingClientRect().height;
-      const sectionTop = Math.round(section.getBoundingClientRect().top);
-      const sectionPosition = sectionTop - navBarHeight;
-      window.scrollBy({
-        top: sectionPosition,
-        behavior: "smooth",
-      });
-    }
-    if (menuItem.classList.contains("mob-item")) {
-      togleMobMenuClose();
-      blurContainerClose();
-    }
-  });
-});
-
-//
-
-const keySectionsPosition = [];
-//
-sections.forEach((section) => {
-  const top = Math.round(section.getBoundingClientRect().top);
-  const height = Math.round(section.getBoundingClientRect().height);
-  const name = section.dataset.id;
-
-  const nav = document.querySelectorAll(`li[data-href=${name}]`);
-
-  keySectionsPosition.push({
-    top,
-    height,
-    name,
-    nav,
-  });
-});
-
-//
-
-window.addEventListener("scroll", () => {
-  const currentScrollPosition = Math.round(window.scrollY);
-  for (const section of keySectionsPosition) {
-    const topPosition =
-      section.top - navBarHeight * 1.2 < currentScrollPosition;
-    const bottomCoords = section.top + section.height - navBarHeight * 1.5;
-    const bottomPosition = bottomCoords < currentScrollPosition;
-    if (topPosition) {
-      section.nav.forEach((item) => {
-        item.classList.add("desc-active-item");
-      });
-    } else {
-      section.nav.forEach((item) => {
-        item.classList.remove("desc-active-item");
-      });
-    }
-    if (bottomPosition) {
-      section.nav.forEach((item) => {
-        item.classList.remove("desc-active-item");
-      });
-      allMenuItems.forEach((item) => {
-        item.classList.remove("desc-active-item");
-      });
-    }
-  }
-});
 
 window.addEventListener("scroll", () => {
   if (window.innerHeight + window.scrollY + 2 >= productData.pageHeight) {
     fetchData(productData);
-  }
-
-  productsSectionTopCoords =
-    Math.round(productsContener.getBoundingClientRect().top) - navBarHeight;
-  const desktopPosition = productsSectionTopCoords < navBarHeight;
-  const mobilePosition =
-    document.body.clientWidth < 1240 && productsSectionTopCoords < 240;
-  if (desktopPosition || mobilePosition) {
-    descMenuItem[2].classList.add("desc-active-item");
-    mobMenuItem[2].classList.add("desc-active-item");
-  } else {
-    descMenuItem[2].classList.remove("desc-active-item");
-    mobMenuItem[2].classList.remove("desc-active-item");
   }
 });
 
@@ -312,9 +298,36 @@ const topLogo = document.getElementById("topLogo");
 
 topLogo.addEventListener("click", () => {
   window.scroll(0, 0);
-
-  if (mobMenuPopUp.classList.contains("mob-nav-active")) {
-    togleMobMenuClose();
-    blurContainerClose();
-  }
 });
+
+/////////////////////////////////////////
+// OBSERVER
+// document.addEventListener("DOMContentLoaded", () => {
+// const sections = document.querySelectorAll("section[data-id]");
+const akcentSectionName = (entries) => {
+  entries.forEach((entry) => {
+    const navItem = document.getElementById(entry.target.dataset.id);
+    if (navItem && entry.isIntersecting) {
+      navItem.classList.add("desc-active-item");
+    } else {
+      navItem.classList.remove("desc-active-item");
+    }
+  });
+};
+
+const sectionObserver = new IntersectionObserver(akcentSectionName, {
+  root: null,
+  threshold: [0.2, 0.2],
+});
+
+sections.forEach((section) => {
+  sectionObserver.observe(section);
+});
+// });
+
+const observeDynamicElements = () => {
+  const dynamicSections = document.querySelectorAll("#section--3 .product");
+  dynamicSections.forEach((section) => {
+    sectionObserver.observe(section);
+  });
+};

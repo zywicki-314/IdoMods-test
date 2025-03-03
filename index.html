@@ -1,43 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Arthrohard</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="./img/favicon" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./img/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="./img/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="./img/favicon/site.webmanifest" />
+    <title>ArthroHard</title>
+
+    <link href="./font/FuturaPT-Book.woff2" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <nav id="nav">
       <div class="nav-container">
         <div id="topLogo" class="logo-wrapper">
-          <img src="./img/logo-Arthrohard.png" alt="logo Arthrohard" />
+          <h1 class="logo-title">
+            <span class="dark-part">Arthro</span>
+            <span class="primary-part">hard</span>
+          </h1>
         </div>
         <ul class="desc-items">
-          <li class="nav-item" id="stand-out">
-            <a href="#section--1"> CO nas wyróżnia </a>
+          <li class="nav-item" id="stand-out" data-href="section--1">
+            CO nas wyróżnia
           </li>
-          <li class="nav-item" id="composition">
-            <a href="#section--2"> Skład </a>
+          <li class="nav-item" id="composition" data-href="section--2">
+            Skład
           </li>
-          <li class="nav-item" id="products">
-            <a href="#section--3"> produkty </a>
+          <li class="nav-item bold" id="products" data-href="section--3">
+            produkty
           </li>
         </ul>
         <div class="mob-menu-toggle">
           <div class="line-burger"></div>
         </div>
       </div>
-      <!-- <ul class="mob-items">
-        <li class="mob-item"><a href="#section--1"> CO nas wyróżnia </a></li>
-        <li class="mob-item"><a href="#section--2"> Skład </a></li>
-        <li class="mob-item"><a href="#section--3"> produkty </a></li>
-      </ul> -->
     </nav>
     <div class="mob-items">
       <ul class="mob-item-wrapper">
-        <li class="mob-item"><a href="#section--1"> CO nas wyróżnia </a></li>
-        <li class="mob-item"><a href="#section--2"> Skład </a></li>
-        <li class="mob-item"><a href="#section--3"> produkty </a></li>
+        <li class="mob-item" data-href="section--1">CO nas wyróżnia</li>
+        <li class="mob-item" data-href="section--2">Skład</li>
+        <li class="mob-item" data-href="section--3">produkty</li>
       </ul>
     </div>
     <!--  -->
@@ -55,7 +69,7 @@
           <span class="primary-part">hard</span>
         </h1>
         <div class="wrapper">
-          <h3 class="grdnt-text hero-grdnt">
+          <h3 class="grdnt-text hero-grdnt grdnt-linear">
             Lab-V Arthrohard Preparat<br />
             na wsparcie stawów dla psa i kota
           </h3>
@@ -69,28 +83,40 @@
     </section>
 
     <!--  -->
-    <div class="decor-abstr decor-1"></div>
-    <div class="decor-abstr decor-2"></div>
-    <div class="decor-abstr decor-3"></div>
+    <section class="decor-wrapper">
+      <div class="decor-abstr decor-abstr-1">
+        <div class="decor-1"></div>
+      </div>
+      <div class="decor-abstr decor-abstr-2">
+        <div class="decor-2"></div>
+      </div>
+      <div class="decor-abstr decor-abstr-3">
+        <div class="decor-3"></div>
+      </div>
+    </section>
 
     <!--  -->
 
-    <section class="stand-out" id="section--1" data-id="stand-out">
-      <h3 class="grdnt-text title underline">Co wyróżnia nasz preparat</h3>
+    <section class="stand-out" id="section--1" data-id="section--1">
+      <h3 class="grdnt-text grdnt-radial title underline">
+        Co wyróżnia nasz preparat
+      </h3>
 
       <div class="description-container">
         <!--  -->
         <div class="card">
           <h4 class="underline">Innowacyjny dodatek - Czarciego Pazura</h4>
-          <span
-            >Zapewnia dodatkowe wsparcie w zwalczaniu stanów bólowych i
-            zapalnych. Skoncentrowane składniki aktywne, opracowane we
-            współpracy z lekarzami weterynarii, przynoszą szybkie i zauważalne
-            efekty, szczególnie korzystne dla zwierząt z poważnymi problemami
-            stawowymi.</span
-          >
+          <div class="text-wrapper">
+            <span
+              >Zapewnia dodatkowe wsparcie w zwalczaniu stanów bólowych i
+              zapalnych. Skoncentrowane składniki aktywne, opracowane we
+              współpracy z lekarzami weterynarii, przynoszą szybkie i zauważalne
+              efekty, szczególnie korzystne dla zwierząt z poważnymi problemami
+              stawowymi.</span
+            >
+          </div>
           <div class="img-container">
-            <img src="./img/shutterstock_1770486131.png" alt="flower" />
+            <img src="./img/shutterstock.jpg" alt="flower" />
             <div class="decor-el decor-el-1"></div>
             <div class="decor-el decor-el-2"></div>
           </div>
@@ -101,12 +127,20 @@
             Wygoda -<br />
             dwa sposoby podawania
           </h4>
+          <!-- <div class="text-wrapper">
+
+          </div> -->
           <ul>
             <li class="one">Bezpośrednio do pyszczka</li>
             <li class="two">Zmieszany z karmą</li>
           </ul>
           <div class="img-container">
-            <img src="./img/Frame-126.png" alt="puppys" />
+            <div class="img-container-half">
+              <img src="./img/frame-dog-1.jpg" alt="puppys" />
+            </div>
+            <div class="img-container-half">
+              <img src="./img/frame-dog-2.jpg" alt="puppys" />
+            </div>
             <div class="decor-el decor-el-3"></div>
             <div class="decor-el decor-el-4"></div>
           </div>
@@ -117,15 +151,17 @@
             Skuteczność -<br />
             skoncentrowana dawka
           </h4>
-          <span
-            >Tylko jedna porcja dziennie. To nie tylko wygoda, ale również
-            gwarancja, że Twoje zwierzę otrzymuje wszystko, czego potrzebuje,
-            aby cieszyć się zdrowiem i aktywnością na długo. Skorzystaj z zalet
-            Arthrohard i zobacz różnicę w komforcie życia swojego
-            zwierzęcia.</span
-          >
+          <div class="text-wrapper">
+            <span class="bold"> Tylko jedna porcja dziennie. </span>
+            <span>
+              To nie tylko wygoda, ale również gwarancja, że Twoje zwierzę
+              otrzymuje wszystko, czego potrzebuje, aby cieszyć się zdrowiem i
+              aktywnością na długo. Skorzystaj z zalet Arthrohard i zobacz
+              różnicę w komforcie życia swojego zwierzęcia.</span
+            >
+          </div>
           <div class="img-container">
-            <img src="./img/shutterstock_2171764885.png" alt="medicine" />
+            <img src="./img/medicine.jpg" alt="medicine" />
             <div class="decor-el decor-el-5"></div>
             <div class="decor-el decor-el-6"></div>
           </div>
@@ -134,15 +170,35 @@
     </section>
 
     <!--  -->
+    <section class="onlyMob-action">
+      <div class="title-wrapper">
+        <h3 class="grdnt-text grdnt-radial title underline">
+          Działanie preparatu
+        </h3>
+      </div>
 
-    <section class="composition" id="section--2" data-id="composition">
-      <h3 class="grdnt-text title underline">Skład w 5 ml</h3>
+      <ul class="content-wrapper">
+        <li>Wsparcie rozwoju chrząstki stawowej</li>
+        <li>Działanie chondroprotekcyjne</li>
+        <li>Zmniejszenie stanu zapalnego i bólu</li>
+        <li>Wzmocnienie stawów</li>
+        <li>Ochrona przed mikrourazami</li>
+        <li>Regeneracja po urazach i zabiegach ortopedycznych</li>
+        <li>Poprawa jakości życia</li>
+      </ul>
+    </section>
+    <!--  -->
 
-      <h4>Co dają poszczególne składniki:</h4>
+    <section class="composition" id="section--2" data-id="section--2">
+      <div class="title-wrapper">
+        <h3 class="grdnt-text grdnt-radial title underline">Skład w 5 ml</h3>
+
+        <h4>Co dają poszczególne składniki:</h4>
+      </div>
 
       <div class="content-wrapper">
-        <div class="col col1">
-          <!-- item start -->
+        <div class="row row1">
+          <!-- item 1  row1 start -->
           <div class="item">
             <div class="icon icon-1"></div>
             <h4>Siarczan glukozaminy</h4>
@@ -157,7 +213,21 @@
             >
           </div>
           <!-- item end -->
-          <!-- item start -->
+          <!-- item 2 row1 start -->
+          <div class="item">
+            <div class="icon icon-4"></div>
+            <h4>Czarci pazur</h4>
+            <span class="capasity">250 mg</span>
+            <span class="text"
+              >Czarci pazur jest rośliną, która ma właściwości przeciwzapalne i
+              przeciwbólowe. Może to pomóc zwierzętom, które doświadczają bólu i
+              stanu zapalnego związanego z problemami ze stawami.</span
+            >
+          </div>
+          <!-- item end -->
+        </div>
+        <div class="row row2">
+          <!-- item 1 row2 start -->
           <div class="item">
             <div class="icon icon-2"></div>
             <h4>Siarczan chondroityny</h4>
@@ -170,6 +240,21 @@
             >
           </div>
           <!-- item end -->
+          <!-- item 2 row2 start -->
+          <div class="item">
+            <div class="icon icon-5"></div>
+            <h4>Witamina C</h4>
+            <span class="capasity">50 mg</span>
+            <span class="text"
+              >Witamina C jest potężnym przeciwutleniaczem, który może pomóc w
+              ochronie stawów poprzez neutralizację wolnych rodników, które mogą
+              uszkadzać chrząstkę. Ponadto, witamina C odgrywa ważną rolę w
+              produkcji kolagenu, kluczowego składnika chrząstki.</span
+            >
+          </div>
+          <!-- item end -->
+        </div>
+        <div class="row row3">
           <!-- item start -->
           <div class="item">
             <div class="icon icon-3"></div>
@@ -183,10 +268,22 @@
             >
           </div>
           <!-- item end -->
+          <div class="item">
+            <div class="icon icon-6"></div>
+            <h4>MSM</h4>
+            <span class="capasity">250 mg</span>
+            <span class="text"
+              >Metylosulfonylometan, czyli MSM, to naturalny związek siarki,
+              który pomaga w utrzymaniu zdrowych stawów poprzez zmniejszenie
+              stanu zapalnego i bólu. MSM może również pomagać w produkcji
+              kolagenu, co przyczynia się do zdrowia chrząstki stawowej.</span
+            >
+          </div>
         </div>
+        <!-- </div> -->
         <!-- col end -->
         <!--  -->
-        <div class="primary-product col3">
+        <div class="primary-product">
           <div class="product-img">
             <img
               class="primary-img"
@@ -207,46 +304,7 @@
           <button type="button" class="buy-now">Kup teraz</button>
         </div>
         <!--  -->
-        <div class="col col2">
-          <!-- item start -->
-          <div class="item">
-            <div class="icon icon-4"></div>
-            <h4>Czarci pazur</h4>
-            <span class="capasity">250 mg</span>
-            <span class="text"
-              >Czarci pazur jest rośliną, która ma właściwości przeciwzapalne i
-              przeciwbólowe. Może to pomóc zwierzętom, które doświadczają bólu i
-              stanu zapalnego związanego z problemami ze stawami.</span
-            >
-          </div>
-          <!-- item end -->
-          <!-- item start -->
-          <div class="item">
-            <div class="icon icon-5"></div>
-            <h4>Witamina C</h4>
-            <span class="capasity">50 mg</span>
-            <span class="text"
-              >Witamina C jest potężnym przeciwutleniaczem, który może pomóc w
-              ochronie stawów poprzez neutralizację wolnych rodników, które mogą
-              uszkadzać chrząstkę. Ponadto, witamina C odgrywa ważną rolę w
-              produkcji kolagenu, kluczowego składnika chrząstki.</span
-            >
-          </div>
-          <!-- item end -->
-          <!-- item start -->
-          <div class="item">
-            <div class="icon icon-6"></div>
-            <h4>MSM</h4>
-            <span class="capasity">250 mg</span>
-            <span class="text"
-              >Metylosulfonylometan, czyli MSM, to naturalny związek siarki,
-              który pomaga w utrzymaniu zdrowych stawów poprzez zmniejszenie
-              stanu zapalnego i bólu. MSM może również pomagać w produkcji
-              kolagenu, co przyczynia się do zdrowia chrząstki stawowej.</span
-            >
-          </div>
-          <!-- item end -->
-        </div>
+
         <!-- col end -->
       </div>
     </section>
@@ -269,9 +327,11 @@
     </div>
     <!--  -->
 
-    <section class="products" id="section--3" data-id="products">
+    <section class="products" id="section--3" data-id="section--3">
       <div class="select-wrapper">
-        <label for="products-number">liczba produktów na stronie</label>
+        <label for="products-number" class="select-label"
+          >liczba produktów na stronie</label
+        >
         <select
           title="products-number"
           name="products-number"
@@ -289,7 +349,7 @@
     <!--  -->
     <div id="popUp" class="hidden-items">
       <div class="top-bar">
-        <span class="title">Product</span>
+        <span class="title">Produkt</span>
         <div class="close-pop-up"></div>
       </div>
       <div class="content">
