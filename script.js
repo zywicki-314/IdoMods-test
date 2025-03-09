@@ -10,6 +10,7 @@ const popUpToggle = document.querySelector(".close-pop-up");
 const popUpContainer = document.getElementById("popUp");
 const blurContainer = document.getElementById("blur");
 //
+const topLogo = document.getElementById("topLogo");
 const navBar = document.getElementById("nav");
 //
 const nameId = document.querySelector(".id-data");
@@ -23,11 +24,23 @@ const sections = document.querySelectorAll("section[data-id]");
 // POP-UP and BLUR
 
 const blurContainerClose = () => {
-  blurContainer.classList.remove("blur-container");
+  blurContainer.classList.remove(
+    blurContainer.classList.contains("blur-container_pop-up")
+      ? "blur-container_pop-up"
+      : "blur-container_mob-bg"
+  );
+  if (navBar.classList.contains("blur-container_mob-bg")) {
+    navBar.classList.remove("blur-container_mob-bg");
+  }
   blurContainer.classList.add("hidden-items");
 };
-const blurContainerOpen = () => {
-  blurContainer.classList.add("blur-container");
+const blurContainerOpen = (type) => {
+  if (type === "mob") {
+    blurContainer.classList.add("blur-container_mob-bg");
+  }
+  if (type === "prod") {
+    blurContainer.classList.add("blur-container_pop-up");
+  }
   blurContainer.classList.remove("hidden-items");
 };
 
@@ -49,7 +62,7 @@ const popUpContainerOpen = () => {
 
 popUpToggle.addEventListener("click", function () {
   popUpContainerClose();
-  if (blurContainer.classList.contains("blur-container")) {
+  if (blurContainer.classList.contains("blur-container_pop-up")) {
     blurContainerClose();
   }
 });
@@ -82,7 +95,7 @@ mobMenuToggle.addEventListener("click", function () {
     midleMenuLine.classList.remove("line-burger-active");
     mobMenuToggle.classList.remove("mob-menu-toggle-disabled");
     mobMenuToggle.classList.add("mob-menu-toggle-active");
-    blurContainerOpen();
+    blurContainerOpen("mob");
   }
 });
 ///////////////////////////////////////////////
@@ -96,16 +109,13 @@ const apiUrl = "https://brandstestowy.smallhost.pl/api/random";
 const selectdata = document.getElementById("produkt-list");
 const productData = {
   pageNumber: 1,
-  pageSize: selectdata.value,
+  pageSize: parseInt(selectdata.value),
   loadedData: [],
   lastPageData: [],
   pageHeight: document.body.offsetHeight,
   isLoading: false,
 };
 
-/////////////////////////////////
-
-//
 const addNewResponseData = (responseData, arrayData) => {
   responseData.forEach((item) => {
     arrayData.push({
@@ -114,16 +124,14 @@ const addNewResponseData = (responseData, arrayData) => {
     });
   });
 };
-//
 
-//
 const fetchData = async (productData) => {
   if (productData.isLoading) return;
   productData.isLoading = true;
   try {
     const url = `${apiUrl}?pageNumber=${productData.pageNumber}&pageSize=${productData.pageSize}`;
-    productData.pageNumber++;
     const response = await fetch(url);
+    console.log("scroll fetch");
     if (!response.ok)
       throw new Error(
         "Wystąpił błąd podczas pobierania danych o naszych produktach. Przepraszamy"
@@ -133,6 +141,7 @@ const fetchData = async (productData) => {
     addNewResponseData(responseData, productData.lastPageData);
     addNewResponseData(responseData, productData.loadedData);
     displayProducts(productData.lastPageData);
+    productData.pageNumber++;
   } catch (e) {
     productsContener.appendChild(errorMessage);
     errorMessage.textContent = e.message;
@@ -141,7 +150,6 @@ const fetchData = async (productData) => {
   }
 };
 
-/////////////////////////////////
 selectdata.addEventListener("change", function () {
   productData.pageSize = selectdata.value;
   productData.pageNumber = 1;
@@ -165,7 +173,7 @@ function displayProducts(products) {
       productList.appendChild(productDiv);
 
       productDiv.addEventListener("click", function () {
-        blurContainerOpen();
+        blurContainerOpen("prod");
         popUpContainerOpen();
 
         const id = product.id;
@@ -252,7 +260,10 @@ window.addEventListener("scroll", () => {
 });
 
 window.addEventListener("scroll", () => {
-  if (window.innerHeight + window.scrollY + 2 >= productData.pageHeight) {
+  const isThisTheEndOfPage =
+    window.innerHeight + window.scrollY + window.innerHeight * 0.15 >=
+    productData.pageHeight;
+  if (isThisTheEndOfPage && !productData.isLoading) {
     fetchData(productData);
   }
 
@@ -271,44 +282,39 @@ window.addEventListener("scroll", () => {
 });
 
 //////////////////////////////////////////////
+////////////////////////////////////////////
 
 const parallaxContainer = document.querySelector(".parallax-container");
 
-////////////////////////////////////////////
-window.addEventListener("scroll", function () {
-  const parallaxContainer = document.querySelector(".parallax-container");
+const dog = document.querySelector(".parallax-dog");
+const rightSpot = document.querySelector(".parallax-rightSpot");
+const leftSpot = document.querySelector(".parallax-leftSpot");
+
+const dogSpeed = 3;
+const rightSpotSpeed = 1;
+const leftSpotSpeed = 1.7;
+
+const paralax = () => {
   const pC = parallaxContainer.getBoundingClientRect();
-  //
-  const dog = document.querySelector(".parallax-dog");
-  const rightSpot = document.querySelector(".parallax-rightSpot");
-  const leftSpot = document.querySelector(".parallax-leftSpot");
-  //
-  const dogSpeed = 0.5;
-  const rightSpotSpeed = 1;
-  const leftSpotSpeed = 1.7;
 
-  dog.style.cssText = `transform: translateY(300px)`;
-  rightSpot.style.cssText = `transform: translateY(490px)`;
+  const triggerPoint = window.innerHeight * 2;
 
-  if (pC.top <= 550 && pC.top > 0) {
-    dog.style.cssText = `transform: translateY(${pC.top * dogSpeed}px)`;
-    rightSpot.style.cssText = `transform: translateY(${
-      pC.top * rightSpotSpeed
-    }px)`;
-    leftSpot.style.cssText = `transform: translateY(${
-      pC.top * leftSpotSpeed
-    }px)`;
-    //
+  if (pC.top <= triggerPoint && pC.top > 0) {
+    dog.style.transform = `translateY(${pC.top * dogSpeed}px)`;
+    rightSpot.style.transform = `translateY(${pC.top * rightSpotSpeed}px)`;
+    leftSpot.style.transform = `translateY(${pC.top * leftSpotSpeed}px)`;
   } else if (pC.top < 0) {
-    dog.style.cssText = `transform: none`;
-    rightSpot.style.cssText = `transform: none`;
-    leftSpot.style.cssText = `transform: none`;
+    dog.style.transform = `translateY(0px)`;
+    rightSpot.style.transform = `translateY(0px)`;
+    leftSpot.style.transform = `translateY(0px)`;
   }
-});
+  requestAnimationFrame(paralax);
+};
+
+paralax();
+// //////////////////////////////
 
 //
-
-const topLogo = document.getElementById("topLogo");
 
 topLogo.addEventListener("click", () => {
   window.scroll(0, 0);
